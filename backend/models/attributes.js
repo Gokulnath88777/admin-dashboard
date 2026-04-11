@@ -1,4 +1,3 @@
-const { DataTypes } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   const Attribute = sequelize.define('Attribute', {
     name: DataTypes.STRING

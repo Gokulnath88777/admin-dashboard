@@ -1,4 +1,3 @@
-const { DataTypes } = require("sequelize");
 
 
 module.exports = (sequelize, DataTypes) => {
@@ -11,8 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'categories'
   });
 
-    Category.associate = models => {
-    Category.hasMany(models.Product, { foreignKey: 'category_id' });
+  Category.associate = models => {
+    Category.hasMany(models.Product, {
+      foreignKey: 'category_id',
+      onDelete: 'SET NULL'
+    });
   };
 
   return Category;

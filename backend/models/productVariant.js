@@ -1,6 +1,3 @@
-const { DataTypes } = require("sequelize");
-
-
 module.exports = (sequelize, DataTypes) => {
     const ProductVariant = sequelize.define('ProductVariant', {
         sku_code: {
@@ -16,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     ProductVariant.associate = models => {
+
         ProductVariant.belongsTo(models.Product, {
             foreignKey: 'product_id'
         });
@@ -25,9 +23,13 @@ module.exports = (sequelize, DataTypes) => {
         });
 
         ProductVariant.belongsToMany(models.AttributeValue, {
-            through: models.AttributeVariant,
-            foreignKey: 'variant_id'
+            through: {
+                model: models.AttributeVariant
+            },
+            foreignKey: 'variant_id',
+            otherKey: 'attribute_value_id'
         });
+
     };
 
     return ProductVariant;

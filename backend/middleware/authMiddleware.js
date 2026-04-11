@@ -1,45 +1,38 @@
-const { User } = require("../models");
-
+const jwt = require('jsonwebtoken')
 const isLogin = async (req, res, next) => {
     try {
-        let { email, password } = req.body;
-        let user = await User.findOne(
-            {
-                where:
-                {
-                    email
-                }
-            }
-        )
-        if (!user) {
-            return res.status(401).json({ message: "Invalid Credentials" })
-        }
-        if (password != user.password) {
-            return res.status(401).json(
+        let token = req.cookies?.token;
+        console.log(token)
+        if (!token) {
+           return res.status(400).json(
                 {
                     message: "Invalid Credentials"
                 }
             )
         }
-        req.user=user
+        const decoded = jwt.verify(token, process.env.SECRET_KEY)
+        req.user = decoded
         next()
+
     }
     catch (error) {
-        res.status(500).json(
+        res.status(401).json(
             {
-                message:"Something went wrong"
+                message: "Token expired"
             }
         )
     }
 }
-const isAdmin =
-    async (req, res, next) => {
+const authorize = (...authorizedPerson)=>
+{
+
+   return async (req, res, next) => {
         try {
-            let user=req.user;
+            let user = req.user;
             if (!user) {
                 return res.status(401).json({ message: "Invalid Credentials" })
             }
-            if (user.role != 'admin') {
+            if (!authorizedPerson.includes(user.role)) {
                 return res.status(403).json(
                     {
                         message: "Unauthorized access"
@@ -60,4 +53,7 @@ const isAdmin =
 
     }
 
-module.exports = {isLogin,isAdmin}
+}
+
+
+module.exports = { isLogin, authorize}
