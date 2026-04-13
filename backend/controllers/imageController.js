@@ -31,4 +31,4 @@ const imageController = async (req, res) => {
         )
     }
 }
-module.exports=imageController
+module.exports={imageController}
