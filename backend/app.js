@@ -2,12 +2,18 @@ const express = require('express')
 const app = express()
 const cookieParser = require('cookie-parser')
 const db = require('./models');
+const cors=require('cors')
 require('dotenv').config()
 const { productRoutes } = require('./Routes/productRoutes');
 const authRoute = require('./Routes/authRoutes');
 const categoryRoute = require('./Routes/categoryRoute');
 const attributeRoute = require('./Routes/attributeRoutes');
+const imageRoute = require('./Routes/imageRoutes');
 
+app.use(cors({
+    origin:process.env.CLIENT_URL,
+    credentials:true
+}))
 db.sequelize.authenticate().
     then(() => console.log("Connected"))
     .catch((error) => console.log(error));
@@ -26,3 +32,4 @@ app.use('/auth', authRoute)
 app.use('/products', productRoutes)
 app.use('/categories', categoryRoute)
 app.use('/attributes',attributeRoute)
+app.use('/images',imageRoute)

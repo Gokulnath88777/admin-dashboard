@@ -12,7 +12,7 @@ const joinAttributes = async (req, res) => {
       variant_id,
       attribute_value_id: value_id,
       createdAt: new Date(),
-      updatedAt: new Date()
+       updatedAt: new Date()
     }));
     const result = await AttributeVariant.bulkCreate(data, {
       ignoreDuplicates: true
