@@ -1,11 +1,15 @@
+import { BrowserRouter } from 'react-router-dom'
 import './App.css'
-import Register from './pages/Register'
+import { ToastContainer } from "react-toastify";
+import PageRoutes from './Routes/PageRoutes';
 function App() {
-
   return (
-    <>
-      <Register></Register>
-    </>
+
+  
+    <BrowserRouter>
+      <ToastContainer />
+      <PageRoutes/>
+    </BrowserRouter>
   )
 }
 

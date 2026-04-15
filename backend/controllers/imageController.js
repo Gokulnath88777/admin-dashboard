@@ -19,6 +19,7 @@ const imageController = async (req, res) => {
             }
         )
         res.status(200).json({
+            image,
             message: "Image added Successfully"
         })
     }

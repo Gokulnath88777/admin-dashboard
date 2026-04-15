@@ -84,7 +84,7 @@ const login = async (req, res) => {
       process.env.SECRET_KEY,
       {
         expiresIn: "1h"
-      },
+      },      
     );
 
     res.cookie("token", token, {
@@ -94,6 +94,7 @@ const login = async (req, res) => {
     });
     res.json(
       {
+        user,
         message: "Login successful"
       }
     );

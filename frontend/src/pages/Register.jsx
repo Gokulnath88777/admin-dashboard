@@ -1,3 +1,4 @@
+import api from "@/api/axios";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -10,11 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios from "axios";
 import { useRef} from "react";
-
 function Register() {
-    const navigate=useNavigate()
     const nameRef = useRef(null);
     const emailRef = useRef(null);
     const passRef = useRef(null);
@@ -27,7 +25,7 @@ function resetForm() {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`,
+            await api.post(`/auth/register`,
                 {
                     name: nameRef.current.value,
                     email: emailRef.current.value,
@@ -36,11 +34,6 @@ function resetForm() {
             );
             alert("Registered successfully ");
             resetForm();
-            setTimeout(()=>
-            {
-
-            })
-
         } catch (err) {
             if (err.response?.status === 409) {
                 alert("User already exists");
@@ -52,6 +45,7 @@ function resetForm() {
             console.log(err.message);
             resetForm();
         } 
+    
     }
 
     return (
