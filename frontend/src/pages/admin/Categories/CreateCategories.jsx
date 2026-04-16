@@ -15,14 +15,13 @@ import { Button } from '@/components/ui/button'
 import { useState } from "react"
 import api from "@/api/axios"
 import { toast } from "react-toastify"
-function Categories() {
+function CreateCategories({refreshCategories}) {
   const [catname, setCatname] = useState("")
-  const [loading,setLoading]=useState(false)
-  const [open,setOpen]=useState(false)
+  const [loading, setLoading] = useState(false)
+  const [open, setOpen] = useState(false)
   async function handleCreate(e) {
     e.preventDefault()
-    if( !catname.trim())
-    {
+    if (!catname.trim()) {
       toast.error('Field is empty')
       return;
     }
@@ -30,26 +29,28 @@ function Categories() {
       setLoading(true)
       const res = await api.post(`categories/create`,
         { name: catname })
-      toast.success("Category Created")
-      setCatname("");
-      setOpen(false);
+      if (res.status == 201) {
+
+        toast.success("Category Created")
+        setCatname("");
+        setOpen(false);
+        refreshCategories()
+      }
     }
     catch (err) {
       toast.error("Failed to create category")
       console.log(err.message)
     }
-    finally
-    {
+    finally {
       setLoading(false)
     }
   }
 
   return (
     <>
-      <div>Create Categories</div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button >Add Categories</Button>
+          <Button className=' rounded-sm p-3'><span className="text-xl">+</span> Add Category</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-sm">
           <form onSubmit={handleCreate}>
@@ -67,9 +68,9 @@ function Categories() {
             </FieldGroup>
             <DialogFooter>
               <DialogClose asChild>
-                <Button type='button' onClick={()=>setCatname("")} >Cancel</Button>
+                <Button type='button' onClick={() => setCatname("")} disabled={loading} >Cancel</Button>
               </DialogClose>
-              <Button type="submit">Create Category</Button>
+              <Button type="submit">{loading?"Creating":"Create"}</Button>
             </DialogFooter>
           </form>
         </DialogContent>
@@ -79,7 +80,7 @@ function Categories() {
   )
 }
 
-export default Categories
+export default CreateCategories
 
 
 

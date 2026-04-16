@@ -6,7 +6,9 @@ import Register from '@/pages/Register'
 import AdminPage from '@/pages/AdminPage'
 import UserPage from '@/pages/UserPage'
 import Unauthorize from '@/pages/Unauthorize'
-import Categories from '@/pages/admin/Categories'
+import Admindashboard from '@/pages/admin/Admindashboard'
+import Categories from '@/pages/admin/Categories/Categories'
+import AttributePage from '@/pages/admin/Attributes/AttributePage'
 
 function PageRoutes() {
   return (
@@ -18,7 +20,9 @@ function PageRoutes() {
 
       <Route  element={<ProtectedRoutes allowedRoles={['admin']} />}>
         <Route path='/admin' element={<AdminPage />}>
-            <Route path='create' element={<Categories/>}> </Route>
+            <Route element={<Admindashboard/>} index></Route>
+            <Route path='categories' element={<Categories/>}> </Route>
+            <Route path='attributes' element={<AttributePage/>}></Route>
         </Route>
       </Route>
 

@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from 'react'
-
 export const AuthContext = createContext();
 function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
@@ -16,6 +15,8 @@ function AuthProvider({ children }) {
         setUser(userData)
     }
     function logout() {
+   
+        console.log("logut");
         localStorage.removeItem('user')
         setUser(null);
     }

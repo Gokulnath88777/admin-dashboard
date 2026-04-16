@@ -22,10 +22,11 @@ const createAttribute = async (req, res) => {
 
 const getAttributes = async (req, res) => {
     try {
-        const data = await Attribute.findAll();
+        const attributes = await Attribute.findAll();
         res.status(200).json({
+            attributes,
             message: "Attributes fetched successfully",
-            data
+            
         });
 
     } catch (err) {

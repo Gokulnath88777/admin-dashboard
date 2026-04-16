@@ -10,7 +10,7 @@ function ProtectedRoutes({ allowedRoles }) {
     
     if (!user) {
         console.log('Not user')
-        return <Navigate to='/register' replace></Navigate>
+        return <Navigate to='/' replace></Navigate>
     }
 
     if (allowedRoles && !allowedRoles.includes(user.role)) {

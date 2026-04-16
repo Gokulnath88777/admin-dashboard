@@ -30,10 +30,8 @@ const getAllCategory = async (req, res) => {
 
         const categories = await Category.findAll();
         res.status(200).json({
-            message:
-            {
-                categories
-            }
+           categories,
+           message:"Data get Successfully"
         })
     }
     catch (err) {
@@ -45,4 +43,65 @@ const getAllCategory = async (req, res) => {
         )
     }
 }
-module.exports = { createCategory, getAllCategory }
+const editCategory = async (req, res) => {
+    try {
+
+        const { id } = req.params
+        const { updatedName } = req.body
+        const category = await Category.findByPk(id)
+        if (!category) {
+            return res.status(404).json(
+                {
+                    message: "Not found"
+                }
+            )
+        }
+        const data = await Category.update({ name: updatedName }, { where: { id } })
+        res.status(200).json(
+            {
+                message: "Data Updated Successfully"
+            })
+
+    }
+    catch (err) {
+        console.log(err.message)
+        res.status(500).json(
+            {
+                message: "Something went wrong"
+            }
+        )
+    }
+}
+const deleteCategory = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const deleted = await Category.destroy({
+            where: { id }
+        })
+        if (!deleted) {
+            return res.status(404).json(
+                {
+                    message: "Not found"
+                }
+            )
+        }
+        res.status(200).json(
+            {
+                message: "Category deleted successfully"
+            }
+        )
+    }
+    catch(err)
+    {
+        console.log(err.message)
+        res.status(500).json(
+            {
+                message:"Something went wrong"
+            }
+        )
+    }
+
+}
+
+module.exports = { createCategory, getAllCategory, editCategory ,deleteCategory }

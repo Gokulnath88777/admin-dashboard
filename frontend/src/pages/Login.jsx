@@ -12,7 +12,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { AuthContext } from "@/context/AuthProvider";
 import { useContext, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 
@@ -65,7 +65,7 @@ function Login() {
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
-          <CardContent className="flex flex-col gap-6">
+          <CardContent className="flex flex-col gap-3">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <input
@@ -74,19 +74,23 @@ function Login() {
                 placeholder="m@example.com"
                 required
                 ref={emailRef}
+                className="border-1 rounded-xl p-2 "
               />
             </div>
-            <div className="grid gap-2">
+            <div className="grid gap-2 ">
               <Label htmlFor="password">Password</Label>
               <input
                 id="password"
                 type="password"
                 required
                 ref={passRef}
+                placeholder="Enter password"
+                className="border-1 rounded-xl p-2 "
               />
             </div>
+            <span className="text-center mb-2">Don't have an account ? <NavLink to='/register' className='text-primary'>Register</NavLink></span>
           </CardContent>
-          <CardFooter className="flex-col gap-2">
+          <CardFooter className="flex-col bg-none gap-2">
             <Button type="submit" className="w-full">
               Login
             </Button>

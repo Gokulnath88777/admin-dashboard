@@ -4,9 +4,9 @@ const isLogin = async (req, res, next) => {
         let token = req.cookies?.token;
         console.log(token)
         if (!token) {
-           return res.status(400).json(
+           return res.status(401).json(
                 {
-                    message: "Invalid Credentials"
+                    message: "No Token"
                 }
             )
         }

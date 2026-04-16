@@ -5,8 +5,7 @@ const { createValue } = require('../controllers/attributeValueController')
 const joinAttribute = require('../controllers/attributeVariantController')
 const attributeRoute=express.Router()
 
-attributeRoute.get('/',isLogin,getAttributes)
-
+attributeRoute.get('/get',isLogin,authorize('admin'),getAttributes)
 attributeRoute.post('/create',isLogin,authorize('admin'),createAttribute)
 attributeRoute.post('/createValue',isLogin,authorize('admin'),createValue)
 attributeRoute.post('/join',isLogin,authorize('admin'),joinAttribute)
