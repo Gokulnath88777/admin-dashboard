@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {
-    tableName: 'images'
+    tableName: 'images',
+          paranoid:true
+
   });
 
   Image.associate = models => {

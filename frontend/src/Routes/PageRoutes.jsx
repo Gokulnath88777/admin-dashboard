@@ -9,6 +9,7 @@ import Unauthorize from '@/pages/Unauthorize'
 import Admindashboard from '@/pages/admin/Admindashboard'
 import Categories from '@/pages/admin/Categories/Categories'
 import AttributePage from '@/pages/admin/Attributes/AttributePage'
+import AttributeValue from '@/pages/admin/Attributes/AttributeValue/AttributeValue'
 
 function PageRoutes() {
   return (
@@ -23,6 +24,7 @@ function PageRoutes() {
             <Route element={<Admindashboard/>} index></Route>
             <Route path='categories' element={<Categories/>}> </Route>
             <Route path='attributes' element={<AttributePage/>}></Route>
+            <Route path='attributes/attributeValue/:id' element={<AttributeValue/>}></Route>
         </Route>
       </Route>
 

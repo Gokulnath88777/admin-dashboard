@@ -15,7 +15,6 @@ module.exports = {
           model: 'product_variants',
           key: 'id'
         },
-        onDelete: 'CASCADE'
       },
 
       image_url: {
@@ -24,7 +23,9 @@ module.exports = {
       },
 
       createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE
+      updatedAt: Sequelize.DATE,
+            deletedAt:Sequelize.DATE
+
     });
   },
 

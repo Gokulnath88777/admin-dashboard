@@ -15,7 +15,7 @@ module.exports = {
           model: 'attributes',
           key: 'id'
         },
-        onDelete: 'CASCADE'
+        onDelete: 'SET NULL'
       },
 
       value: {
@@ -24,7 +24,8 @@ module.exports = {
       },
 
       createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE
+      updatedAt: Sequelize.DATE,
+         deletedAt:Sequelize.DATE
     });
   },
 

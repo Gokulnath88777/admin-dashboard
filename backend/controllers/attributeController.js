@@ -1,4 +1,4 @@
-const { Attribute } = require('../models');
+const { Attribute, AttributeValue, Sequelize } = require('../models');
 
 const createAttribute = async (req, res) => {
     try {
@@ -22,20 +22,93 @@ const createAttribute = async (req, res) => {
 
 const getAttributes = async (req, res) => {
     try {
-        const attributes = await Attribute.findAll();
-        res.status(200).json({
-            attributes,
-            message: "Attributes fetched successfully",
-            
+
+        const data = await Attribute.findAll({
+            attributes: [
+                'id',
+                'name',
+                [
+                    Sequelize.fn(
+                        'COUNT',
+                        Sequelize.col('AttributeValues.id')
+                    ),
+                    'value_count'
+                ]
+            ],
+            include: {
+                model: AttributeValue,
+                attributes: [],
+            },
+            group: ['Attribute.id']
         });
 
-    } catch (err) {
+        res.json(data);
+
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+};
+const editAttribute = async (req, res) => {
+    try {
+
+        const { id } = req.params
+        const { updatedName } = req.body
+        const attribute = await Attribute.findByPk(id)
+        if (!attribute) {
+
+            return res.status(404).json(
+                {
+                    
+                    message: "Not found"
+                }
+            )
+        }
+        const data = await Attribute.update({ name: updatedName }, { where: { id } })
+        res.status(200).json(
+            {
+                message: "Data Updated Successfully"
+            })
+
+    }
+    catch (err) {
         console.log(err.message)
         res.status(500).json(
             {
-                 message:"Something went wrong"
-            });
+                message: "Something went wrong"
+            }
+        )
     }
-};
+}
+const deleteAttribute = async (req, res) => {
 
-module.exports = { createAttribute, getAttributes }
+    try {
+        const { id } = req.params;
+        const deleted = await Attribute.destroy({
+            where: { id }
+        })
+        if (!deleted) {
+            return res.status(404).json(
+                {
+                    message: "Not found"
+                }
+            )
+        }
+        res.status(200).json(
+            {
+                message: "Attribute deleted successfully"
+            }
+        )
+    }
+    catch(err)
+    {
+        console.log(err.message)
+        res.status(500).json(
+            {
+                message:"Something went wrong"
+            }
+        )
+    }
+
+}
+
+module.exports = { createAttribute, getAttributes,editAttribute,deleteAttribute}

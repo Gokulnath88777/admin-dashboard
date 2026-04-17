@@ -15,7 +15,6 @@ module.exports = {
           model: 'users',
           key: 'id'
         },
-        onDelete: 'SET NULL'
       },
 
       category_id: {
@@ -24,7 +23,6 @@ module.exports = {
           model: 'categories',
           key: 'id'
         },
-        onDelete: 'SET NULL'
       },
 
       brand: Sequelize.STRING,
@@ -34,7 +32,8 @@ module.exports = {
       description: Sequelize.TEXT,
 
       createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE
+      updatedAt: Sequelize.DATE,
+      deletedAt: Sequelize.DATE
     });
   },
 

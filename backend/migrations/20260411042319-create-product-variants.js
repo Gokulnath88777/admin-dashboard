@@ -15,7 +15,6 @@ module.exports = {
           model: 'products',
           key: 'id'
         },
-        onDelete: 'CASCADE'
       },
 
       sku_code: {
@@ -33,7 +32,8 @@ module.exports = {
       quantity: Sequelize.INTEGER,
 
       createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE
+      updatedAt: Sequelize.DATE,
+      deletedAt:Sequelize.DATE
     });
   },
 

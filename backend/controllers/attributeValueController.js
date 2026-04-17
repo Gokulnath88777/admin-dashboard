@@ -1,4 +1,4 @@
-const { Attribute, AttributeValue } = require("../models");
+const { Attribute, AttributeValue} = require("../models");
 
 const createValue = async (req, res) => {
     try {
@@ -23,7 +23,7 @@ const createValue = async (req, res) => {
                 value
             }
         )
-        res.status(200).json(
+        res.status(201).json(
             {
                 message: "Attribute value created successfully",
                 attributeValue
@@ -38,4 +38,107 @@ const createValue = async (req, res) => {
         )
     }
 }
-module.exports = { createValue }
+const getValue = async (req, res) => {
+    try {
+
+        const { id } = req.params
+        if (!id) {
+            return res.status(400).json(
+                {
+                    message: "Field is required"
+                })
+        }
+        const attribute=await Attribute.findByPk(id)
+        const name=attribute.name
+        const values = await AttributeValue.findAll(
+            {
+                where: { attribute_id:id }
+            }
+
+        )
+       
+        res.status(200).json(
+            {
+                name,
+                values,
+                message: 'Values get successfully'
+            }
+        )
+    }
+    catch (err) {
+        console.log(err.message);
+        res.status(500).json(
+            {
+                message: "Something went wrong"
+            }
+        )
+    }
+
+}
+
+
+const editAttributeValue = async (req, res) => {
+    try {
+
+        const { id } = req.params
+        const { updatedName } = req.body
+        const attributeValue = await AttributeValue.findByPk(id)
+        console.log(attributeValue);
+        if (!attributeValue) {
+
+            return res.status(404).json(
+                {
+                    attributeValue,
+                    message: "Not found"
+                }
+            )
+        }
+        const data = await AttributeValue.update({ value: updatedName }, { where: { id } })
+        res.status(200).json(
+            {
+                message: "Data Updated Successfully"
+            })
+
+    }
+    catch (err) {
+        console.log(err.message)
+        res.status(500).json(
+            {
+                message: "Something went wrong"
+            }
+        )
+    }
+}
+const deleteAttributeValue = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const deleted = await AttributeValue.destroy({
+            where: { id }
+        })
+        if (!deleted) {
+            return res.status(404).json(
+                {
+                    message: "Not found"
+                }
+            )
+        }
+        res.status(200).json(
+            {
+                message: "AttributeValue deleted successfully"
+            }
+        )
+    }
+    catch(err)
+    {
+        console.log(err.message)
+        res.status(500).json(
+            {
+                message:"Something went wrong"
+            }
+        )
+    }
+
+}
+
+module.exports = { createValue, getValue,editAttributeValue,deleteAttributeValue}

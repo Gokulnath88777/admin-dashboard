@@ -19,15 +19,21 @@ function Categories() {
         }
     }
 
-    async function handleDelete(id)
+  
+    async function handleDelete(id,name)
     {
         try
         {
-            const res=await api.delete(`/categories/delete/${id}`)
-            if(res.status===200)
+            let result=confirm(`Are you sure you want to delete ${name}`)
+            if(result)
             {
-                toast.success('Category deleted');
-                getData();
+
+                const res=await api.delete(`/categories/delete/${id}`)
+                if(res.status===200)
+                {
+                    toast.success('Category deleted');
+                    getData();
+                }
             }
         }
         catch(err)
@@ -61,7 +67,7 @@ function Categories() {
                                 </div>
                                 <div className="flex gap-2">
                                     <EditCategories refreshCategories={getData} name={data.name} id={data.id}/>
-                                    <Button size="sm" variant="destructive" onClick={()=>{handleDelete(data.id)}} type='button'>
+                                    <Button size="sm" variant="destructive" onClick={()=>{handleDelete(data.id,data.name)}} type='button'>
                                        <FaTrash/>
                                     </Button>
                                 </div>

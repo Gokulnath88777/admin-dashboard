@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         discount: DataTypes.INTEGER,
         quantity: DataTypes.INTEGER
     }, {
-        tableName: 'product_variants'
+        tableName: 'product_variants',
+              paranoid:true
+
     });
 
     ProductVariant.associate = models => {

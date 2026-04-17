@@ -2,7 +2,8 @@ module.exports = (sequelize, DataTypes) => {
   const Attribute = sequelize.define('Attribute', {
     name: DataTypes.STRING
   }, {
-    tableName: 'attributes'
+    tableName: 'attributes',
+    paranoid:true
   });
 
   Attribute.associate = models => {

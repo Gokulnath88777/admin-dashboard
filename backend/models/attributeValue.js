@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      tableName: 'attribute_values'
+      tableName: 'attribute_values',
+      paranoid:true
     }
   );
   AttributeValue.associate = models => {

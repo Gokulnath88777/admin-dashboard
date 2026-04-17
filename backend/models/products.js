@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       description: DataTypes.TEXT
     },
     {
-      tableName: 'products'
+      tableName: 'products',
+      paranoid:true
     }
   );
   Product.associate = models => {
