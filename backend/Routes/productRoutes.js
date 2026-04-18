@@ -4,7 +4,7 @@ const { createProduct, getAllProduct } = require('../controllers/productControll
 const { createVariant, getVariants } = require('../controllers/productVariantController');
 const productRoutes=express.Router()
 
-productRoutes.get('/',isLogin,getAllProduct)
+productRoutes.get('/get',isLogin,getAllProduct)
 productRoutes.post('/create',isLogin,authorize('admin'),createProduct)
 
 productRoutes.get('/getVariants',isLogin,getVariants)

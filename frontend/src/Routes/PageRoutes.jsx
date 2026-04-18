@@ -3,13 +3,15 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoutes from './ProtectedRoutes'
 import Register from '@/pages/Register'
-import AdminPage from '@/pages/AdminPage'
 import UserPage from '@/pages/UserPage'
 import Unauthorize from '@/pages/Unauthorize'
 import Admindashboard from '@/pages/admin/Admindashboard'
 import Categories from '@/pages/admin/Categories/Categories'
-import AttributePage from '@/pages/admin/Attributes/AttributePage'
 import AttributeValue from '@/pages/admin/Attributes/AttributeValue/AttributeValue'
+import AdminPage from '@/pages/admin/AdminPage'
+import AttributePage from '@/pages/admin/Attributes/AttributeComponents/AttributePage'
+import CreateProduct from '@/pages/admin/Product/CreateProduct'
+import Product from '@/pages/admin/Product/Product'
 
 function PageRoutes() {
   return (
@@ -25,10 +27,10 @@ function PageRoutes() {
             <Route path='categories' element={<Categories/>}> </Route>
             <Route path='attributes' element={<AttributePage/>}></Route>
             <Route path='attributes/attributeValue/:id' element={<AttributeValue/>}></Route>
+            <Route path='products' element={<CreateProduct></CreateProduct>}></Route>
+            <Route path='products/viewProduct'element={<Product></Product>}></Route>
         </Route>
-      </Route>
-
-      
+      </Route>      
      <Route element={<ProtectedRoutes allowedRoles={['user']}/>}>
         <Route path='/user' element={<UserPage/>}></Route>
      </Route>

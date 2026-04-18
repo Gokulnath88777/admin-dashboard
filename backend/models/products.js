@@ -21,11 +21,13 @@ module.exports = (sequelize, DataTypes) => {
   );
   Product.associate = models => {
     Product.belongsTo(models.User, {
-      foreignKey: 'admin_id'
+      foreignKey: 'admin_id',
+      as:'admin'
     });
 
     Product.belongsTo(models.Category, {
-      foreignKey: 'category_id'
+      foreignKey: 'category_id',
+      as:'category'
     });
 
     Product.hasMany(models.ProductVariant, {

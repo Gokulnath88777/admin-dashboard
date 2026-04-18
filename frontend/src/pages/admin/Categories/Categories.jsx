@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import { FaTrash } from "react-icons/fa"
 function Categories() {
     const [catdata, setCatdata] = useState([])
-   async function getData()
+  async function getData()
     {
            try {
                 const res = await api.get(`/categories/get`)

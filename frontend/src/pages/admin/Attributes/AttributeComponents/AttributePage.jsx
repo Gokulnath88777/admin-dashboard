@@ -1,13 +1,11 @@
 import api from '@/api/axios';
 import { useEffect, useState } from 'react'
-import CreateAttributes from './CreateAttributes';
 import { toast } from 'react-toastify';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { NavLink } from 'react-router-dom';
-import EditAttributes from './EditAttributes';
 import { FaTrash } from "react-icons/fa"
-import CreateValue from './AttributeValue/CreateValue';
+import CreateAttributes from './CreateAttributes';
+import EditAttributes from './EditAttributes';
 
 function AttributePage() {
 
@@ -87,7 +85,7 @@ function AttributePage() {
                                             <EditAttributes refreshAttributes={getAttribute} name={data.name} id={data.id}/>
 
                                             <Button size="sm" variant="destructive"className="hover:scale-[1.02] transition"
-                                                onClick={() => handleDelete(data.id, data.name)}>
+                                                onClick={() => handleDelete(data.id, data.name,data.value_count)}>
                                                 <FaTrash />
                                             </Button>
                                             <Button asChild size="sm"variant="outline" className="hover:bg-primary hover:text-white transition" >
