@@ -48,6 +48,8 @@ const getAttributes = async (req, res) => {
         res.status(500).json(error.message);
     }
 };
+
+
 const editAttribute = async (req, res) => {
     try {
 
@@ -58,7 +60,7 @@ const editAttribute = async (req, res) => {
 
             return res.status(404).json(
                 {
-                    
+
                     message: "Not found"
                 }
             )
@@ -99,16 +101,15 @@ const deleteAttribute = async (req, res) => {
             }
         )
     }
-    catch(err)
-    {
+    catch (err) {
         console.log(err.message)
         res.status(500).json(
             {
-                message:"Something went wrong"
+                message: "Something went wrong"
             }
         )
     }
 
 }
 
-module.exports = { createAttribute, getAttributes,editAttribute,deleteAttribute}
+module.exports = { createAttribute, getAttributes, editAttribute, deleteAttribute }

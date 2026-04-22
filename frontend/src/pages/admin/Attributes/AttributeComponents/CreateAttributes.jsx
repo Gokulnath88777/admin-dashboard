@@ -22,6 +22,7 @@ function CreateAttributes({refreshAttributes}) {
   const [open, setOpen] = useState(false)
   async function attributeCreate(e) {
     e.preventDefault()
+      e.stopPropagation(); 
     if (!atrname.trim()) {
       toast.error('Field is empty')
       return;
@@ -77,10 +78,8 @@ function CreateAttributes({refreshAttributes}) {
         </DialogContent>
       </Dialog>
     </>
-
   )
 }
-
 export default CreateAttributes
 
 

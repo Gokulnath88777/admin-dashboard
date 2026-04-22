@@ -15,12 +15,13 @@ import { Button } from '@/components/ui/button'
 import { useState } from "react"
 import api from "@/api/axios"
 import { toast } from "react-toastify"
-function CreateValue({refreshValue,id,name}) {
+function CreateValue({ refreshValue, id, name }) {
   const [valuename, setValuename] = useState("")
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   async function handleCreate(e) {
     e.preventDefault()
+    e.stopPropagation();
     if (!valuename.trim()) {
       toast.error('Field is empty')
       return;
@@ -28,16 +29,16 @@ function CreateValue({refreshValue,id,name}) {
     try {
       setLoading(true)
       const res = await api.post(`attributes/createValue`,
-        { attribute_id:id ,value:valuename })
+        { attribute_id: id, value: valuename })
       if (res.status == 201) {
-        toast.success("Category Created")
+        toast.success("Value Created")
         setValuename("");
         setOpen(false);
         refreshValue()
       }
     }
     catch (err) {
-      toast.error("Failed to create category")
+      toast.error("Failed to create Value")
       console.log(err.message)
     }
     finally {
@@ -69,7 +70,7 @@ function CreateValue({refreshValue,id,name}) {
               <DialogClose asChild>
                 <Button type='button' onClick={() => setValuename("")} disabled={loading} >Cancel</Button>
               </DialogClose>
-              <Button type="submit">{loading?"Creating":"Create"}</Button>
+              <Button type="submit">{loading ? "Creating" : "Create"}</Button>
             </DialogFooter>
           </form>
         </DialogContent>

@@ -12,6 +12,7 @@ import AdminPage from '@/pages/admin/AdminPage'
 import AttributePage from '@/pages/admin/Attributes/AttributeComponents/AttributePage'
 import CreateProduct from '@/pages/admin/Product/CreateProduct'
 import Product from '@/pages/admin/Product/Product'
+import CreateVariant from '@/pages/admin/Product/CreateVariant'
 
 function PageRoutes() {
   return (
@@ -29,6 +30,7 @@ function PageRoutes() {
             <Route path='attributes/attributeValue/:id' element={<AttributeValue/>}></Route>
             <Route path='products' element={<CreateProduct></CreateProduct>}></Route>
             <Route path='products/viewProduct'element={<Product></Product>}></Route>
+            <Route path='products/createVariant/:id' element={<CreateVariant/>}></Route>
         </Route>
       </Route>      
      <Route element={<ProtectedRoutes allowedRoles={['user']}/>}>

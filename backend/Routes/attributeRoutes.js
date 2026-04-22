@@ -1,7 +1,7 @@
 const express=require('express')
 const { isLogin, authorize } = require('../middleware/authMiddleware')
 const { createAttribute, getAttributes, editAttribute, deleteAttribute } = require('../controllers/attributeController')
-const { createValue, getValue, editAttributeValue, deleteAttributeValue,  } = require('../controllers/attributeValueController')
+const { createValue, getValue, editAttributeValue, deleteAttributeValue, getValuesByAttributes,  } = require('../controllers/attributeValueController')
 const joinAttribute = require('../controllers/attributeVariantController')
 const attributeRoute=express.Router()
 
@@ -14,6 +14,6 @@ attributeRoute.post('/createValue',isLogin,authorize('admin'),createValue)
 attributeRoute.get('/getValue/:id',isLogin,authorize('admin'),getValue)
 attributeRoute.patch('/updateValue/:id',isLogin,authorize('admin'),editAttributeValue)
 attributeRoute.delete('/deleteValue/:id',isLogin,authorize('admin'),deleteAttributeValue)
-
+attributeRoute.get('/getByAttribute',isLogin,authorize('admin'),getValuesByAttributes)
 attributeRoute.post('/join',isLogin,authorize('admin'),joinAttribute)
 module.exports=attributeRoute

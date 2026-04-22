@@ -1,4 +1,4 @@
-const { Attribute, AttributeValue} = require("../models");
+const { Attribute, AttributeValue } = require("../models");
 
 const createValue = async (req, res) => {
     try {
@@ -48,15 +48,15 @@ const getValue = async (req, res) => {
                     message: "Field is required"
                 })
         }
-        const attribute=await Attribute.findByPk(id)
-        const name=attribute.name
+        const attribute = await Attribute.findByPk(id)
+        const name = attribute.name
         const values = await AttributeValue.findAll(
             {
-                where: { attribute_id:id }
+                where: { attribute_id: id }
             }
 
         )
-       
+
         res.status(200).json(
             {
                 name,
@@ -129,16 +129,53 @@ const deleteAttributeValue = async (req, res) => {
             }
         )
     }
-    catch(err)
-    {
+    catch (err) {
         console.log(err.message)
         res.status(500).json(
             {
-                message:"Something went wrong"
+                message: "Something went wrong"
             }
         )
     }
 
 }
+const getValuesByAttributes = async (req, res) => {
+    try {
 
-module.exports = { createValue, getValue,editAttributeValue,deleteAttributeValue}
+        const { ids } = req.query;
+        console.log(req.query);
+        console.log("ids" , ids);
+
+        if (!ids) {
+            return res.status(400).json({
+                message: "Attribute id required"
+            });
+        }
+        const attributeIds = ids.split(',');
+
+        const attributeValue = await Attribute.findAll({
+            where: { id: attributeIds },
+            attributes: ['id', 'name'],
+            include: [{
+                model: AttributeValue,
+                attributes: ['id', 'value']
+            }]
+        });
+        res.status(200).json(
+            {
+              attributeValue
+            }
+        )
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json(
+            {
+                message: "Something went wrong"
+            })
+    }
+
+};
+
+
+module.exports = { createValue, getValue, editAttributeValue, deleteAttributeValue, getValuesByAttributes }
