@@ -82,5 +82,6 @@ const getVariants = async (req, res) => {
   }
 };
 
+
 module.exports = { createVariant, getVariants }
 

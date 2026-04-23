@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import api from "@/api/axios"
 import { toast } from "react-toastify"
 import { NavLink } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 
 function CreateProduct() {
@@ -58,6 +59,7 @@ function CreateProduct() {
             toast.error("Product creation failed")
         }
     }
+
     useEffect(() => {
         getData()
     }, [])
@@ -65,11 +67,17 @@ function CreateProduct() {
         <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex justify-between">
                 <h1 className="text-2xl sm:text-3xl font-semibold mb-6">Create Product</h1>
+                <div className="flex gap-5">        
+                <NavLink to="/admin/products/bulkUpload" className="px-4 py-2 h-fit rounded-lg bg-primary text-white font-medium 
+                hover:bg-primary/90 transition duration-200 shadow-sm">
+                    Bulk Upload
+                </NavLink>
                 <NavLink to="/admin/products/viewProduct" className="px-4 py-2 h-fit rounded-lg bg-primary text-white font-medium 
-                hover:bg-primary/90 transition duration-200 shadow-sm"
-                >
+                hover:bg-primary/90 transition duration-200 shadow-sm">
                     View Products
-                </NavLink>            </div>
+                </NavLink>   
+                </div>
+                 </div>
             <form onSubmit={handleSubmit} className="w-full max-w-5xl space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>

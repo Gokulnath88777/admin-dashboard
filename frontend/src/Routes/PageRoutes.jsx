@@ -13,6 +13,7 @@ import AttributePage from '@/pages/admin/Attributes/AttributeComponents/Attribut
 import CreateProduct from '@/pages/admin/Product/CreateProduct'
 import Product from '@/pages/admin/Product/Product'
 import CreateVariant from '@/pages/admin/Product/CreateVariant'
+import BulkUploadProduct from '@/pages/admin/Product/BulkUploadProduct'
 
 function PageRoutes() {
   return (
@@ -30,7 +31,8 @@ function PageRoutes() {
             <Route path='attributes/attributeValue/:id' element={<AttributeValue/>}></Route>
             <Route path='products' element={<CreateProduct></CreateProduct>}></Route>
             <Route path='products/viewProduct'element={<Product></Product>}></Route>
-            <Route path='products/createVariant/:id' element={<CreateVariant/>}></Route>
+            <Route path='products/createVariant/:id/:slug' element={<CreateVariant/>}></Route>
+            <Route path='products/bulkUpload' element={<BulkUploadProduct/>}></Route>
         </Route>
       </Route>      
      <Route element={<ProtectedRoutes allowedRoles={['user']}/>}>

@@ -4,14 +4,16 @@ import { useEffect, useState } from "react";
 import CreateAttributes from "../Attributes/AttributeComponents/CreateAttributes";
 import CreateValue from "../Attributes/AttributeValue/CreateValue";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 function CreateVariant() {
   const [attributes, setAttributes] = useState([]);
   const [selectedAttributes, setSelectedAttribute] = useState([])
   const [attrValues, setAttrValues] = useState([])
   const [loading, setLoading] = useState(false);
-  const { id } = useParams()
+  const { id, slug } = useParams()
+  const navigate=useNavigate();
   let [variant, setVariant] = useState({
     sku_code: "",
     price: "",
@@ -150,92 +152,96 @@ function CreateVariant() {
 
   }, [])
 
-
-
   return (
-    <Card className="min-h-full bg-white px-4 sm:px-6 lg:px-8 py-6">
-      <form className="w-full max-w-5xl space-y-6" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div>
-            <label className="block text-sm font-medium mb-2">SKU Code</label>
-            <input name="sku_code" placeholder="Enter Product Code" value={variant.sku_code} onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary" />
+    <>
+      <div className="flex justify-between px-3">
+        <h2 className="font-light text-xl">Create Variant for <span className="font-bold  uppercase">{slug}</span></h2>
+       <Button variant="outline" className='hover:bg-primary hover:text-white transition' onClick={()=>navigate(-1)}>Back</Button>
+      </div>
+      <Card className="min-h-full bg-white px-4 sm:px-6 lg:px-8 py-6 mt-2">
+        <form className="w-full max-w-5xl space-y-6" onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label className="block text-sm font-medium mb-2">SKU Code</label>
+              <input name="sku_code" placeholder="Enter Product Code" value={variant.sku_code} onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Price</label>
+              <input name="price" type="number" placeholder="Enter Price" value={variant?.price} onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Discount</label>
+              <input name="discount" type="number" placeholder="Enter Discount" value={variant?.discount} onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Quantity</label>
+              <input name="stock" type="number" placeholder="Enter Quantity" value={variant?.stock} onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary" />
+            </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Price</label>
-            <input name="price" type="number" placeholder="Enter Price" value={variant?.price} onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary" />
+          <div className="border rounded-xl bg-white shadow-sm p-5">
+            <div className="flex justify-between">
+              <h2 className="text-lg font-semibold mb-4 border-b pb-2">Attribute Selection</h2>
+              <CreateAttributes refreshAttributes={getAttributes}></CreateAttributes>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {attributes.length > 0 ? attributes.map(data =>
+                <label key={data.id} className="cursor-pointer">
+                  <input type="checkbox" value={data.id} onChange={handleAttributes} className=" hidden" />
+                  <span
+                    className="px-5 py-2 rounded-full border text-sm font-medium bg-gray-50  transition peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">
+                    {data.name}
+                  </span>
+                </label>
+              ) : <p className="text-sm text-gray-400">No Attributes Available</p>}
+            </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Discount</label>
-            <input name="discount" type="number" placeholder="Enter Discount" value={variant?.discount} onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Quantity</label>
-            <input name="stock" type="number" placeholder="Enter Quantity" value={variant?.stock} onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary" />
-          </div>
-        </div>
-        <div className="border rounded-xl bg-white shadow-sm p-5">
-          <div className="flex justify-between">
-            <h2 className="text-lg font-semibold mb-4 border-b pb-2">Attribute Selection</h2>
-            <CreateAttributes refreshAttributes={getAttributes}></CreateAttributes>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            {attributes.length > 0 ? attributes.map(data =>
-              <label key={data.id} className="cursor-pointer">
-                <input type="checkbox" value={data.id} onChange={handleAttributes}  className=" hidden" />
-                <span
-                  className="px-5 py-2 rounded-full border text-sm font-medium bg-gray-50  transition peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary">
-                  {data.name}
-                </span>
-              </label>
-            ) : <p className="text-sm text-gray-400">No Attributes Available</p>}
-          </div>
-        </div>
-        <div className="border rounded-xl bg-white shadow-sm p-5">
-          <h2 className="text-lg font-semibold mb-4 border-b pb-2">Attribute Values</h2>
-          <div className="space-y-5">
-            {attrValues.length > 0 ? attrValues.map(data =>
-              <div key={data.id}>
-                <div className="flex justify-between">
-                  <p className="font-semibold uppercase  text-sm mb-3">{data.name}</p>
-                  <CreateValue refreshValue={getValueByAttributes} id={data.id} name={data.name}></CreateValue>
+          <div className="border rounded-xl bg-white shadow-sm p-5">
+            <h2 className="text-lg font-semibold mb-4 border-b pb-2">Attribute Values</h2>
+            <div className="space-y-5">
+              {attrValues.length > 0 ? attrValues.map(data =>
+                <div key={data.id}>
+                  <div className="flex justify-between">
+                    <p className="font-semibold uppercase  text-sm mb-3">{data.name}</p>
+                    <CreateValue refreshValue={getValueByAttributes} id={data.id} name={data.name}></CreateValue>
+                  </div>
+
+                  <div className="flex flex-wrap gap-3">
+                    {
+                      <select
+                        value={variant.slcAttrValue[data.id] || ""}
+                        onChange={(e) => handleAttributeValue(e, data.id)}
+                        className="w-full border mt-3 border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base bg-white focus:outline-none focus:ring-0 focus:border-gray-400"
+                      >
+                        <option value="">Select category</option>
+                        {
+                          data.AttributeValues.length > 0 ?
+                            data.AttributeValues.map(d => (<option key={d.id} value={d.id}>{d.value}</option>))
+                            :
+                            <option value="">No data</option>
+                        }
+                      </select>
+                    }
+                  </div>
+
                 </div>
+              ) : <p className="text-sm text-gray-400">No Values</p>}
+            </div>
 
-                <div className="flex flex-wrap gap-3">
-                  {
-                    <select
-                      value={variant.slcAttrValue[data.id] || ""}
-                      onChange={(e) => handleAttributeValue(e, data.id)}
-                      className="w-full border mt-3 border-gray-300 rounded-md px-4 py-2 text-sm sm:text-base bg-white focus:outline-none focus:ring-0 focus:border-gray-400"
-                    >
-                      <option value="">Select category</option>
-                      {
-                        data.AttributeValues.length > 0 ?
-                          data.AttributeValues.map(d => (<option key={d.id} value={d.id}>{d.value}</option>))
-                          :
-                          <option value="">No data</option>
-                      }
-                    </select>
-                  }
-                </div>
-
-              </div>
-            ) : <p className="text-sm text-gray-400">No Values</p>}
           </div>
-
-        </div>
-        <div className="pt-4">
-          <button type="submit" className="bg-primary text-white px-8 py-2 rounded-md hover:opacity-90 transition">
-            {
-              loading ? "Creating" : "Create Product"
-            }
-          </button>
-        </div>
-      </form>
-    </Card>
+          <div className="pt-4">
+            <button type="submit" className="bg-primary text-white px-8 py-2 rounded-md hover:opacity-90 transition">
+              {
+                loading ? "Creating" : "Create Product"
+              }
+            </button>
+          </div>
+        </form>
+      </Card>
+    </>
   )
 }
 

@@ -5,10 +5,11 @@ import PageRoutes from './Routes/PageRoutes';
 function App() {
   return (
 
-  
+
     <BrowserRouter>
-      <ToastContainer />
-      <PageRoutes/>
+      <ToastContainer position="top-right"
+        style={{ marginTop: "55px" }} />
+          <PageRoutes />
     </BrowserRouter>
   )
 }
